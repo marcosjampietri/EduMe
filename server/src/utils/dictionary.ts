@@ -1,0 +1,1 @@
+export const words = ["a", "aa", "aaj", "ahfds"];
