@@ -30,13 +30,13 @@ pipeline {
                script {
                   echo 'building application..'
                   withCredentials([usernamePassword(credentialsId: 'dockerhub-cred', passwordVariable: 'DOCKER_PASSWORD', usernameVariable: 'DOCKER_ID')]) {
-                      sh "docker build -t marcosjampietri/ssc-edume-docker-repo:latest ./client"
+                      sh "docker build -t marcosjampietri/ssc-edume-next:latest ./client"
                       sh "docker build -t marcosjampietri/ssc-api:latest ./server"
                       sh "docker build -t marcosjampietri/ssc-nginx:latest ./nginx"
                       
                       sh 'echo ${DOCKER_PASSWORD} | docker login -u ${DOCKER_ID} --password-stdin'
                       
-                      sh "docker push marcosjampietri/ssc-edume-docker-repo:latest"
+                      sh "docker push marcosjampietri/ssc-edume-next:latest"
                       sh "docker push marcosjampietri/ssc-api:latest"
                       sh "docker push marcosjampietri/ssc-nginx:latest"
                   }
