@@ -93,7 +93,7 @@ const Keyboard = () => {
     return (
         <>
             <Outline>
-                <h2>Super Secret Code:</h2>
+                <H1>SUPER SECRET CODE:</H1>
                 <Code
                     ref={textInput}
                     value={numb}
@@ -213,5 +213,8 @@ const Button = styled.div`
 `;
 
 const H4 = styled.h4`
+    color: black;
+`;
+const H1 = styled.h1`
     color: black;
 `;
