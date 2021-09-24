@@ -30,15 +30,15 @@ pipeline {
                script {
                   echo 'building application..'
                   withCredentials([usernamePassword(credentialsId: 'dockerhub-cred', passwordVariable: 'DOCKER_PASSWORD', usernameVariable: 'DOCKER_ID')]) {
-                      sh "docker build -t marcosjampietri/SSC-EduMe-docker-repo:latest ./client"
-                      sh "docker build -t marcosjampietri/SSC-api:latest ./server"
-                      sh "docker build -t marcosjampietri/SSC-nginx:latest ./nginx"
+                      sh "docker build -t marcosjampietri/ssc-EduMe-docker-repo:latest ./client"
+                      sh "docker build -t marcosjampietri/ssc-api:latest ./server"
+                      sh "docker build -t marcosjampietri/ssc-nginx:latest ./nginx"
                       
                       sh 'echo ${DOCKER_PASSWORD} | docker login -u ${DOCKER_ID} --password-stdin'
                       
-                      sh "docker push marcosjampietri/SSC-EduMe-docker-repo:latest"
-                      sh "docker push marcosjampietri/SSC-api:latest"
-                      sh "docker push marcosjampietri/SSC-nginx:latest"
+                      sh "docker push marcosjampietri/ssc-EduMe-docker-repo:latest"
+                      sh "docker push marcosjampietri/ssc-api:latest"
+                      sh "docker push marcosjampietri/ssc-nginx:latest"
                   }
                }
             }
