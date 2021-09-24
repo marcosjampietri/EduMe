@@ -3,8 +3,8 @@ import { createGlobalStyle, css } from "styled-components";
 import { useSelector, useDispatch } from "react-redux";
 import { Transition, animated, config, useSpring } from "react-spring";
 
-export const GlobalStyle = createGlobalStyle`
 
+export const GlobalStyle = createGlobalStyle`
 
 
 body {

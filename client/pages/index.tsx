@@ -4,6 +4,7 @@ import Head from "next/head";
 
 
 import Keyboard from "../components/Keyboard";
+import Favorite from "../components/Favorites"
 
 const Home: NextPage = () => {
     return (
@@ -17,7 +18,10 @@ const Home: NextPage = () => {
                 <link rel="icon" href="/favicon.ico" />
             </Head>
 
-            <main><Keyboard /></main>
+            <main>
+                <Favorite />
+                <Keyboard />
+            </main>
         </div>
     );
 };

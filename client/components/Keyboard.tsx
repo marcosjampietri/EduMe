@@ -1,6 +1,9 @@
 import React, { useState, useEffect } from "react";
+import { useDispatch } from "react-redux";
 import styled from "styled-components";
 import axios from "axios";
+
+import { addFavAction } from "../store/actions/listActions";
 
 const Keyboard = () => {
     const buttons = [
@@ -74,8 +77,15 @@ const Keyboard = () => {
     const typing = async (input: string) => {
         setCode((state) => (state += input)); // sets the input
 
+
+        const url =
+            process.env["NODE_ENV"] === "development"
+                ? "http://localhost:5000"
+                : "";
+        const dictdUrl = () => `${url}/api/translate`;
+
         const { data: wordList } = await axios.post(
-            "http://localhost:5000/api/translate",
+            dictdUrl(),
             {
                 code,
             }
@@ -89,6 +99,8 @@ const Keyboard = () => {
     }, [code]);
 
     let textInput: React.RefObject<HTMLInputElement> = React.createRef(); // React use ref to get input value
+
+    const dispatch = useDispatch();
 
     return (
         <>
@@ -118,9 +130,9 @@ const Keyboard = () => {
             <List>
                 {wordsList &&
                     wordsList.map((word, ind) => (
-                        <h4 key={ind} onClick={() => console.log(word)}>
-                            {" "}
-                            {word}{" "}
+                        <h4 key={ind} onClick={() => dispatch(addFavAction(word))}>
+
+                            {word}
                         </h4>
                     ))}
             </List>
