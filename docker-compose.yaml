@@ -3,7 +3,7 @@ version: "3"
 services:
   nginx:
     restart: always
-    image: "marcosjampietri/scc-nginx:latest"
+    image: "marcosjampietri/ssc-nginx:latest"
     ports:
       - "5150:80"
   api:
@@ -28,3 +28,4 @@ services:
       - mongo
     ports:
       - "3000:3000"
+
