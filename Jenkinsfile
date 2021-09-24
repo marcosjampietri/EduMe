@@ -53,7 +53,7 @@ pipeline {
                         sh "scp -o StrictHostKeyChecking=no ansible/* root@${ANSIBLE_SERVER}:/root"
                         sh "scp -o StrictHostKeyChecking=no docker-compose.yaml root@${ANSIBLE_SERVER}:/root"
                         withCredentials([sshUserPrivateKey(credentialsId: 'Marcos-ec2-default', keyFileVariable: 'KEYFILE', usernameVariable: 'USER')]) {
-                            sh 'scp $KEYFILE root@$ANSIBLE_SERVER:/root/'
+                            sh 'scp $KEYFILE root@$ANSIBLE_SERVER:/root/Marcos-ec2-default.pem'
                         }
                     }
                 }
