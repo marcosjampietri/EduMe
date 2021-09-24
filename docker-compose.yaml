@@ -23,7 +23,7 @@ services:
       - MONGO_INITDB_ROOT_USERNAME=${DATABASE_USERNAME}
       - MONGO_INITDB_ROOT_PASSWORD=${DATABASE_PASSWORD}
   nextjs:
-    image: "marcosjampietri/scc-EduMe-docker-repo:latest"
+    image: "marcosjampietri/scc-edume-docker-repo:latest"
     links:
       - mongo
     ports:
