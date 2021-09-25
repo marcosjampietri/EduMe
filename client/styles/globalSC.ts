@@ -1,20 +1,22 @@
-import { createGlobalStyle, css } from "styled-components";
-
-import { useSelector, useDispatch } from "react-redux";
-import { Transition, animated, config, useSpring } from "react-spring";
-
+import { createGlobalStyle } from "styled-components";
 
 export const GlobalStyle = createGlobalStyle`
 
 
-body {
-  color: hsla(240, 50%, 100%, 1);
+html {
+    
+    background-color: hsla(240, 5%, 12%, 1);
+}
+
+
+* {
+  color: hsla(240, 50%, 0%, 1);
   padding: 0;
   margin: 0;
-  font-family: Montserrat;
-  font-weight: lighter;
+  font-family: Arial;
+  
 
-  letter-spacing: 0.05em;
+  letter-spacing: 0.15em;
   line-height: 1;
   text-decoration: none;
   list-style: none;

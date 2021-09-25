@@ -1,6 +1,15 @@
 import axios from "axios";
 import { actionCreator } from "../../types/states";
 
+export const typingAction = (input: object) => ({
+    type: "TYPING",
+    payload: input,
+});
+
+export const clearCodeAction = () => ({
+    type: "CLEAR_CODE",
+});
+
 export const wordsAction: actionCreator<any> = () => async (
     dispatch,
     getState
@@ -21,6 +30,7 @@ export const wordsAction: actionCreator<any> = () => async (
         payload: { words: fullDict.data },
     });
 };
+
 // export const getWordsAction: actionCreator<any> = (code: string) => async (
 //     dispatch: any,
 //     getState: any
@@ -46,14 +56,3 @@ export const wordsAction: actionCreator<any> = () => async (
 //         payload: wordList,
 //     });
 // };
-
-
-
-export const typingAction = (input: object) => ({
-    type: "TYPING",
-    payload: input,
-});
-
-export const clearCodeAction = () => ({
-    type: "CLEAR_CODE",
-});

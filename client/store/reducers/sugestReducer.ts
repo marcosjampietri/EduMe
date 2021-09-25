@@ -1,7 +1,4 @@
-import {
-
-    ListActionType,
-} from "../../types/listTypes";
+import { ListActionType } from "../../types/listTypes";
 
 interface SugestState {
     wordsList: string[]
@@ -13,17 +10,14 @@ const initialState: SugestState = {
 
 export const sugestReducer = (
     state: SugestState = initialState,
-    { type, payload }: ListActionType
+    action: ListActionType
 ): SugestState => {
-    switch (type) {
-
+    switch (action.type) {
         case "GET_SUGESTIONS":
             return {
                 ...state,
-                wordsList: payload
-
+                wordsList: action.payload
             }
-
         default:
             return state;
     }

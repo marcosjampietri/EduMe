@@ -3,96 +3,102 @@ import { useDispatch } from "react-redux";
 import styled from "styled-components";
 import axios from "axios";
 
-
 import { AppState, useTypedSelector } from "../store/reducers/rootReducer";
-import { addFavAction, sugestionsAction } from "../store/actions/listActions";
+import { sugestionsAction } from "../store/actions/sugestActions";
 import { clearCodeAction, typingAction } from "../store/actions/wordsAction";
+import { favAction } from "../store/actions/favActions";
 
 const Keyboard = () => {
-    const buttons = [
+    const digits = [
         {
             num: "",
             label: "1",
             alpha: "",
+            digi: "favs",
         },
         {
             num: "2",
             label: "2",
             alpha: "[abc]",
+            digi: "a b c",
         },
         {
             num: "3",
             label: "3",
             alpha: "[def]",
+            digi: "d e f",
         },
         {
             num: "4",
             label: "4",
             alpha: "[ghi]",
+            digi: "g h i",
         },
         {
             num: "5",
             label: "5",
             alpha: "[jkl]",
+            digi: "j k l",
         },
         {
             num: "6",
             label: "6",
             alpha: "[mno]",
+            digi: "m n o",
         },
         {
             num: "7",
             label: "7",
             alpha: "[pqrs]",
+            digi: "p q r s",
         },
         {
             num: "8",
             label: "8",
             alpha: "[tuv]",
+            digi: "t u v",
         },
         {
             num: "9",
             label: "9",
             alpha: "[wxyz]",
+            digi: "w x y z",
         },
         {
             num: "",
             label: "#",
             alpha: "",
-        },
-        {
-            num: "0",
-            label: "0",
-            alpha: "",
+            digi: "enter",
         },
         {
             num: "",
-            label: "Del",
+            label: "0",
             alpha: "",
+            digi: "sugest",
+        },
+        {
+            num: "",
+            label: "DEL",
+            alpha: "",
+            digi: "",
         },
     ];
 
     const dispatch = useDispatch();
 
     const { code, numb } = useTypedSelector((state: AppState) => state.typn);
-    const { wordsList } = useTypedSelector((state: AppState) => state.sugst);
-
 
     useEffect(() => {
         const typing = async () => {
-
             const url =
                 process.env["NODE_ENV"] === "development"
                     ? "http://localhost:5000"
                     : "";
             const dictdUrl = () => `${url}/api/translate`;
 
-            const { data: wordsList } = await axios.post(
-                dictdUrl(),
-                {
-                    code,
-                }
-            );
+            const { data: wordsList } = await axios.post(dictdUrl(), {
+                code,
+            });
 
             dispatch(sugestionsAction(wordsList));
         };
@@ -101,50 +107,38 @@ const Keyboard = () => {
     }, [code]);
 
     const special = (label: string) => {
-        if (label === "Del") {
-            dispatch(clearCodeAction())
+        if (label === "DEL") {
+            dispatch(clearCodeAction());
         } else if (label === "1") {
-            dispatch(clearCodeAction())
+            dispatch(favAction());
         }
-    }
+    };
 
     let textInput: React.RefObject<HTMLInputElement> = React.createRef(); // React use ref to get input value
 
-
     return (
-        <>
-            <Outline>
-                <H1>SUPER SECRET CODE:</H1>
-                <Code
-                    ref={textInput}
-                    value={numb}
-                    onChange={() => console.log("typing")}
-                />
-                <Pad>
-                    {buttons.map((item, index) => (
-                        <Button
-                            key={index}
-                            onClick={() => {
-                                dispatch(typingAction(item));
-                                special(item.label);
-                            }}
-                        >
-                            <H4>{item.label}</H4>
-                            <H4>{item.alpha}</H4>
-                        </Button>
-                    ))}
-                </Pad>
-            </Outline>
-
-            <List>
-                {wordsList &&
-                    wordsList.map((word, ind) => (
-                        <h4 key={ind} onClick={() => { dispatch(addFavAction(word)); dispatch(clearCodeAction()) }}>
-                            {word}
-                        </h4>
-                    ))}
-            </List>
-        </>
+        <Outline>
+            <Title>SUPER SECRET CODE:</Title>
+            <Code
+                ref={textInput}
+                value={numb}
+                onChange={() => console.log("typing")}
+            />
+            <Pad>
+                {digits.map((item, index) => (
+                    <Button
+                        key={index}
+                        onClick={() => {
+                            dispatch(typingAction(item));
+                            special(item.label);
+                        }}
+                    >
+                        <HNum>{item.label}</HNum>
+                        <HDigi>{item.digi?.toUpperCase()}</HDigi>
+                    </Button>
+                ))}
+            </Pad>
+        </Outline>
     );
 };
 
@@ -157,8 +151,8 @@ const Outline = styled.div`
     margin: 10px auto;
 
     background-image: linear-gradient(
-        hsla(200, 43%, 93%, 1),
-        hsla(200, 72%, 53%, 1)
+        hsla(240, 5%, 15%, 1),
+        hsla(240, 10%, 10%, 1)
     );
     border-radius: 10px;
     box-shadow: 2px 2px 15px black;
@@ -169,48 +163,49 @@ const Outline = styled.div`
     flex-direction: column;
 `;
 
+const Title = styled.h1`
+    margin: 30px 10px -20px;
+
+    font-size: 30px;
+
+    background: -webkit-linear-gradient(
+        90deg,
+        hsl(190, 100%, 50%),
+        hsl(165, 100%, 50%)
+    );
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+
+    text-shadow: 0px 0px 10px hsla(165, 100%, 70%, 1),
+        1px -1px 0px hsla(165, 100%, 90%, 1),
+        -1px 1px 0px hsla(165, 100%, 30%, 1);
+`;
+
 const Code = styled.input`
     width: 50%;
-    margin: 20px auto;
+
+    margin: 50px auto;
     padding: 5px 20px;
     text-align: center;
 
-    box-shadow: inset -1px 2px 5px hsla(183, 83%, 25%, 1);
+    box-shadow: 0px 0px 35px hsla(175, 100%, 70%, 1);
+    background-image: linear-gradient(
+        hsla(170, 100%, 50%, 1),
+        hsla(190, 100%, 50%, 1)
+    );
     border-radius: 5px;
-    font-size: 20px;
-    font-family: arial;
-    border: none;
-`;
+    font-size: 30px;
 
-const List = styled.ul`
-    margin: 50px auto;
-    padding: 20px;
-
-    width: 85%;
-    max-width: 700px;
-
-    display: flex;
-    justify-content: center;
-    flex-wrap: wrap;
-
-    h4 {
-        margin: 10px;
-        padding: 5px;
-        font-size: clamp(1em, 2, 5vw, 3em);
-
-        cursor: pointer;
-        color: black;
-        background-color: hsla(0, 0%, 81%, 0.7);
-        border-radius: 5px;
-    }
+    border: 2px solid hsla(175, 80%, 50%, 1);
 `;
 
 const Pad = styled.div`
-    width: 100%;
+    width: 400px;
     max-width: 400px;
     height: 100%;
-    padding: 20px 0px;
+    padding: 0px 0px 50px;
 
+    background: transparent;
     display: flex;
     justify-content: center;
     align-items: center;
@@ -218,23 +213,34 @@ const Pad = styled.div`
 `;
 
 const Button = styled.div`
-    width: 30%;
-    height: 30%;
-    margin: 5px;
-    flex: 0 0 30%;
+    width: 80px;
+    height: 80px;
+    margin: 20px;
 
-    border-radius: 10px;
-    background-color: hsla(0, 0%, 60%, 0.5);
-    box-shadow: 1px 1px 2px black, -1px -1px 2px white;
+    border-radius: 50px;
+    border: 3px solid hsla(240, 5%, 10%, 1);
+    background: linear-gradient(
+        145deg,
+        hsla(240, 5%, 17%, 1),
+        hsla(240, 6%, 5%, 1)
+    );
+    box-shadow: 13px 13px 10px hsla(240, 10%, 5%, 0.51),
+        -8px -8px 10px hsla(240, 10%, 20%, 0.51);
 
     display: flex;
     justify-content: center;
     align-items: center;
+    flex-direction: column;
 `;
 
-const H4 = styled.h4`
-    color: black;
+const H = styled.h4`
+    color: hsla(185, 100%, 50%, 1);
+    text-shadow: 1px 1px 15px hsla(165, 100%, 50%, 1);
 `;
-const H1 = styled.h1`
-    color: black;
+const HNum = styled(H)`
+    margin: 5px;
+`;
+
+const HDigi = styled(H)`
+    font-size: 10px;
 `;

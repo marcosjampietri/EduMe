@@ -1,7 +1,7 @@
 import { combineReducers } from "redux";
 import { useSelector, TypedUseSelectorHook } from "react-redux";
 
-import { navReducer } from "./navReducer";
+import { favReducer } from "./favReducer";
 import { toastReducer } from "./toastReducer";
 import { codeReducer } from "./wordsReducer";
 import { listReducer } from "./listReducer";
@@ -9,7 +9,7 @@ import { sugestReducer } from "./sugestReducer";
 
 
 const rootReducer = combineReducers({
-    nav: navReducer,
+    fav: favReducer,
     typn: codeReducer,
     list: listReducer,
     sugst: sugestReducer,

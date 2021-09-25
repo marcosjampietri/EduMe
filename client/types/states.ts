@@ -1,8 +1,8 @@
 import { Action } from "redux";
 import { ThunkAction } from "redux-thunk";
 
-export interface navState {
-    NavOn: boolean;
+export interface favState {
+    favOn: boolean;
 }
 export interface modState {
     ModOn: boolean;
@@ -32,7 +32,7 @@ export interface typingActionTP {
 }
 
 export interface storeType {
-    navState: navState;
+    favState: favState;
     modState: modState;
     toastState: toastState;
     loadState: loadState;

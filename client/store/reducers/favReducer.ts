@@ -1,20 +1,20 @@
-import { navState } from "../../types/states";
+import { favState } from "../../types/states";
 
 const initState = {
-    NavOn: false,
+    favOn: false,
 };
 
-export const navReducer = (state: navState = initState, action: any) => {
+export const favReducer = (state: favState = initState, action: any) => {
     switch (action.type) {
-        case "TOGGLE_NAV":
+        case "TOGGLE_FAV":
             return {
                 ...state,
-                NavOn: !state.NavOn,
+                favOn: !state.favOn,
             };
         case "TOGGLE_NAV_OFF":
             return {
                 ...state,
-                NavOn: false,
+                favOn: false,
             };
         default:
             return {

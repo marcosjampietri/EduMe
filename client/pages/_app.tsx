@@ -3,23 +3,13 @@ import type { AppProps } from "next/app";
 import { useRouter } from "next/router";
 import { PersistGate } from "redux-persist/integration/react";
 import { useStore } from "../store";
-import { Provider, useSelector, useDispatch } from "react-redux";
+import { Provider, useDispatch } from "react-redux";
 import { Transition, animated, config } from "react-spring";
 import styled from "styled-components";
 
-
-
-import { navAction } from "../store/actions/navActions";
-import { AppState } from "../store/reducers/rootReducer";
+import { favAction } from "../store/actions/favActions";
+import { AppState, useTypedSelector } from "../store/reducers/rootReducer";
 import { GlobalStyle } from "../styles/globalSC";
-
-
-
-{/* import Menu from "../components/micro/menu"; */ }
-
-{/* import Blur from "../components/micro/blur"; */ }
-
-
 
 const App = ({ Component, pageProps, router }: AppProps) => {
     const store = useStore(pageProps.initialReduxState);
@@ -50,13 +40,11 @@ const AppChild = ({ Component, pageProps }: AppProps) => {
         },
     ];
 
-    const { NavOn } = useSelector((state: AppState) => state.nav);
-
-
+    const { favOn } = useTypedSelector((state: AppState) => state.fav);
 
     useEffect(() => {
-        if (NavOn) {
-            dispatch(navAction());
+        if (favOn) {
+            dispatch(favAction());
         }
     }, [router.route]);
 
@@ -64,7 +52,6 @@ const AppChild = ({ Component, pageProps }: AppProps) => {
         <>
             <GlobalStyle />
             <NextChild>
-
                 {/* <Menu /> */}
 
                 {/* <Blur /> */}
@@ -113,7 +100,6 @@ const AppChild = ({ Component, pageProps }: AppProps) => {
         </>
     );
 };
-
 
 export default App;
 

@@ -1,29 +1,28 @@
-import React, { useState, useEffect } from "react";
+import React from "react";
 import { useDispatch } from "react-redux";
 import styled from "styled-components";
 
-
 import { AppState, useTypedSelector } from "../store/reducers/rootReducer";
-
 import { clearFavAction } from "../store/actions/listActions";
+import { favAction } from "../store/actions/favActions";
 
 const Favorites = () => {
     const dispatch = useDispatch();
-    const listFavorites = useTypedSelector((state: AppState) => state.list);
 
-    console.log(listFavorites)
+    const listFavorites = useTypedSelector((state: AppState) => state.list);
 
     return (
         <Outline>
             <H1>FAVORITE WORDS</H1>
             <List>
                 {listFavorites.map((word, ind) => (
-                    <h4 key={ind} >
-                        {word}
-                    </h4>
+                    <h4 key={ind}>{word}</h4>
                 ))}
             </List>
-            <Clear onClick={() => dispatch(clearFavAction())}>CLEAR</Clear>
+            <Controls>
+                <Clear onClick={() => dispatch(clearFavAction())}>CLEAR</Clear>
+                <Clear onClick={() => dispatch(favAction())}>OFF</Clear>
+            </Controls>
         </Outline>
     );
 };
@@ -32,24 +31,24 @@ export default Favorites;
 
 const Outline = styled.div`
     width: 100%;
-    max-width: 500px;
+    max-width: 550px;
 
-    margin: 10px auto;
+    margin: 0px auto;
 
     background-image: linear-gradient(
-        hsla(200, 43%, 93%, 1),
-        hsla(200, 72%, 53%, 1)
+        hsla(240, 5%, 15%, 1),
+        hsla(240, 10%, 10%, 1)
     );
+
     border-radius: 10px;
-    box-shadow: 2px 2px 15px black;
+    box-shadow: 0px 20px 35px hsla(189, 72%, 50%, 0.2),
+        2px 3px 0px hsla(189, 0%, 0%, 1), -1px -1px 0px hsla(189, 0%, 80%, 0.3);
 
     display: flex;
     justify-content: center;
     align-items: center;
     flex-direction: column;
 `;
-
-
 
 const List = styled.ul`
     margin: 50px auto;
@@ -75,18 +74,39 @@ const List = styled.ul`
 `;
 
 const H1 = styled.h1`
-    color: black;
+    margin: 20px;
+    color: gray;
 `;
 
-const Clear = styled.div`
-    width: 70px;
-    height: 70px;
-    margin: 20px;
-    
-    cursor: cell;
-    
-    background: red;
+const Controls = styled.div`
+    padding: 10px 30px;
+    width: 100%;
     display: flex;
-    align-items: center;
+    justify-content: space-between;
+`;
+const Clear = styled.div`
+    width: 80px;
+    height: 80px;
+    margin: 20px;
+
+    cursor: pointer;
+    border-radius: 50px;
+    border: 3px solid hsla(240, 5%, 10%, 1);
+    background: linear-gradient(
+        145deg,
+        hsla(240, 5%, 17%, 1),
+        hsla(240, 6%, 5%, 1)
+    );
+    box-shadow: 13px 13px 10px hsla(240, 10%, 5%, 0.51),
+        -8px -8px 10px hsla(240, 10%, 20%, 0.51);
+
+    display: flex;
     justify-content: center;
+    align-items: center;
+    flex-direction: column;
+
+    color: hsla(185, 100%, 50%, 1);
+    text-shadow: 1px 1px 15px hsla(165, 100%, 50%, 1);
+
+    font-size: 10px;
 `;
