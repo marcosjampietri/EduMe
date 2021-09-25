@@ -26,7 +26,12 @@ export function codeReducer(
                 numb: state.numb += action.payload.num
             }
         case "CLEAR_CODE":
-            return initState;
+            return {
+                ...state,
+                numb: "",
+                code: "",
+            }
+
         default:
             return {
                 ...state,

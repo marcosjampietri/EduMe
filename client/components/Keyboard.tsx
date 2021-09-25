@@ -4,7 +4,10 @@ import styled from "styled-components";
 import axios from "axios";
 
 import { AppState, useTypedSelector } from "../store/reducers/rootReducer";
-import { sugestionsAction } from "../store/actions/sugestActions";
+import {
+    sugestionsAction,
+    sugestOnAction,
+} from "../store/actions/sugestActions";
 import { clearCodeAction, typingAction } from "../store/actions/wordsAction";
 import { favAction } from "../store/actions/favActions";
 
@@ -67,7 +70,7 @@ const Keyboard = () => {
         {
             num: "",
             label: "#",
-            alpha: "",
+            alpha: "$",
             digi: "enter",
         },
         {
@@ -108,41 +111,55 @@ const Keyboard = () => {
 
     const special = (label: string) => {
         if (label === "DEL") {
-            dispatch(clearCodeAction());
+            setTimeout(() => {
+                dispatch(clearCodeAction());
+            }, 100);
         } else if (label === "1") {
             dispatch(favAction());
+        } else if (label === "0") {
+            dispatch(sugestOnAction());
+        } else if (label === "#") {
+            if (code.length < 1) {
+                dispatch(clearCodeAction());
+            }
         }
     };
 
     let textInput: React.RefObject<HTMLInputElement> = React.createRef(); // React use ref to get input value
 
     return (
-        <Outline>
-            <Title>SUPER SECRET CODE:</Title>
-            <Code
-                ref={textInput}
-                value={numb}
-                onChange={() => console.log("typing")}
-            />
-            <Pad>
-                {digits.map((item, index) => (
-                    <Button
-                        key={index}
-                        onClick={() => {
-                            dispatch(typingAction(item));
-                            special(item.label);
-                        }}
-                    >
-                        <HNum>{item.label}</HNum>
-                        <HDigi>{item.digi?.toUpperCase()}</HDigi>
-                    </Button>
-                ))}
-            </Pad>
-        </Outline>
+        <Margin>
+            <Outline>
+                <Title>SUPER SECRET CODE:</Title>
+                <Code
+                    ref={textInput}
+                    value={numb}
+                    onChange={() => console.log("typing")}
+                />
+                <Pad>
+                    {digits.map((item, index) => (
+                        <Button
+                            key={index}
+                            onClick={() => {
+                                dispatch(typingAction(item));
+                                special(item.label);
+                            }}
+                        >
+                            <HNum>{item.label}</HNum>
+                            <HDigi>{item.digi?.toUpperCase()}</HDigi>
+                        </Button>
+                    ))}
+                </Pad>
+            </Outline>
+        </Margin>
     );
 };
 
 export default Keyboard;
+
+const Margin = styled.div`
+    margin: 10px;
+`;
 
 const Outline = styled.div`
     width: 100%;
@@ -166,7 +183,7 @@ const Outline = styled.div`
 const Title = styled.h1`
     margin: 30px 10px -20px;
 
-    font-size: 30px;
+    font-size: clamp(1em, 3vw, 2em);
 
     background: -webkit-linear-gradient(
         90deg,
@@ -200,8 +217,8 @@ const Code = styled.input`
 `;
 
 const Pad = styled.div`
-    width: 400px;
-    max-width: 400px;
+    width: 100%;
+    max-width: 350px;
     height: 100%;
     padding: 0px 0px 50px;
 
@@ -215,7 +232,7 @@ const Pad = styled.div`
 const Button = styled.div`
     width: 80px;
     height: 80px;
-    margin: 20px;
+    margin: 10px;
 
     border-radius: 50px;
     border: 3px solid hsla(240, 5%, 10%, 1);

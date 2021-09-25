@@ -6,13 +6,15 @@ import { AppState, useTypedSelector } from "../store/reducers/rootReducer";
 import { addFavAction } from "../store/actions/listActions";
 import { clearCodeAction } from "../store/actions/wordsAction";
 
+import { sugestOffAction } from "../store/actions/sugestActions";
+
 const Keyboard = () => {
     const dispatch = useDispatch();
 
     const { wordsList } = useTypedSelector((state: AppState) => state.sugst);
 
     return (
-        <List>
+        <List onClick={() => dispatch(sugestOffAction())}>
             {wordsList.map((word, ind) => (
                 <h4
                     key={ind}
