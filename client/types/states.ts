@@ -27,6 +27,9 @@ export interface navActionTP {
 export interface isLodingActionTP {
     type: "LOADED";
 }
+export interface typingActionTP {
+    obj: { type: "TOGGLE_NAV", payload: string };
+}
 
 export interface storeType {
     navState: navState;
@@ -37,7 +40,7 @@ export interface storeType {
 
 }
 
-export type allActions = navActionTP | isLodingActionTP;
+export type allActions = navActionTP | isLodingActionTP | typingActionTP;
 
 export type actionCreator<allActions extends Action> = () => ThunkAction<
     void,

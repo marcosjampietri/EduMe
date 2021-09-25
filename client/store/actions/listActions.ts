@@ -12,3 +12,8 @@ export const remvFavAction = (word: string) => ({
 export const clearFavAction = () => ({
     type: "CLEAR_LIST",
 });
+
+export const sugestionsAction = (wordList: string[]) => ({
+    type: "GET_SUGESTIONS",
+    payload: wordList,
+});

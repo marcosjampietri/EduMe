@@ -1,9 +1,12 @@
-import React, { useState, useEffect } from "react";
+import React, { useEffect } from "react";
 import { useDispatch } from "react-redux";
 import styled from "styled-components";
 import axios from "axios";
 
-import { addFavAction } from "../store/actions/listActions";
+
+import { AppState, useTypedSelector } from "../store/reducers/rootReducer";
+import { addFavAction, sugestionsAction } from "../store/actions/listActions";
+import { clearCodeAction, typingAction } from "../store/actions/wordsAction";
 
 const Keyboard = () => {
     const buttons = [
@@ -69,38 +72,44 @@ const Keyboard = () => {
         },
     ];
 
-    const [code, setCode] = useState("");
-    const [numb, setNumb] = useState("");
-    const [wordsList, setWordsList] = useState(["type"]);
+    const dispatch = useDispatch();
 
-    // the function sends a post request "code", i'll convert to RegEx on the Back-End
-    const typing = async (input: string) => {
-        setCode((state) => (state += input)); // sets the input
+    const { code, numb } = useTypedSelector((state: AppState) => state.typn);
+    const { wordsList } = useTypedSelector((state: AppState) => state.sugst);
 
-
-        const url =
-            process.env["NODE_ENV"] === "development"
-                ? "http://localhost:5000"
-                : "";
-        const dictdUrl = () => `${url}/api/translate`;
-
-        const { data: wordList } = await axios.post(
-            dictdUrl(),
-            {
-                code,
-            }
-        );
-
-        setWordsList(wordList);
-    };
 
     useEffect(() => {
-        typing("");
+        const typing = async () => {
+
+            const url =
+                process.env["NODE_ENV"] === "development"
+                    ? "http://localhost:5000"
+                    : "";
+            const dictdUrl = () => `${url}/api/translate`;
+
+            const { data: wordsList } = await axios.post(
+                dictdUrl(),
+                {
+                    code,
+                }
+            );
+
+            dispatch(sugestionsAction(wordsList));
+        };
+
+        typing();
     }, [code]);
+
+    const special = (label: string) => {
+        if (label === "Del") {
+            dispatch(clearCodeAction())
+        } else if (label === "1") {
+            dispatch(clearCodeAction())
+        }
+    }
 
     let textInput: React.RefObject<HTMLInputElement> = React.createRef(); // React use ref to get input value
 
-    const dispatch = useDispatch();
 
     return (
         <>
@@ -116,8 +125,8 @@ const Keyboard = () => {
                         <Button
                             key={index}
                             onClick={() => {
-                                typing(item.alpha);
-                                setNumb((state) => (state += item.num));
+                                dispatch(typingAction(item));
+                                special(item.label);
                             }}
                         >
                             <H4>{item.label}</H4>
@@ -130,8 +139,7 @@ const Keyboard = () => {
             <List>
                 {wordsList &&
                     wordsList.map((word, ind) => (
-                        <h4 key={ind} onClick={() => dispatch(addFavAction(word))}>
-
+                        <h4 key={ind} onClick={() => { dispatch(addFavAction(word)); dispatch(clearCodeAction()) }}>
                             {word}
                         </h4>
                     ))}
