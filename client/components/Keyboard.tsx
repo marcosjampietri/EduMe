@@ -134,11 +134,11 @@ const Keyboard = () => {
             <Outline>
                 <Top>
                     <Credits>
-                        <p>DEVELOPED BY</p>
+                        <p>DEVELOPED BY:</p>
                         <Link href="https://www.marcosjampietri.co.uk">
                             <a> MARCOS JAMPIETRI </a>
                         </Link>
-                        <p>FOR</p>
+                        <p>FOR:</p>
                         <Link href="https://edume.com">
                             <a> EduMe</a>
                         </Link>
@@ -310,13 +310,12 @@ const Credits = styled.div`
     gap: 4px;
 
     a {
-        font-size: 10px;
+        font-size: clamp(0.5em, 1vw, 3em);
         color: grey;
         font-weight: 900;
     }
 
     p {
-        justify-self: end;
         font-size: 8px;
         color: grey;
         font-weight: 100;

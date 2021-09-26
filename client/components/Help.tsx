@@ -9,40 +9,38 @@ import { helpAction } from "../store/actions/helpActions";
 const Help = () => {
     const helpItems = [
         {
+            name: "2-9",
+            descr: "Inserts digits to build words",
+            icon: "",
+        },
+        {
+            name: "0",
+            descr: "Opens a list of possible words you can choose from the combination of your super secret code",
+            icon: "",
+        },
+        {
+            name: "#",
+            descr: "Trims the suggestions so that it only shows words with the number of digits you inserted",
+            icon: "",
+        },
+        {
+            name: "word",
+            descr: "Click on the words on the suggestion list to add them to the favourites",
+            icon: "",
+        },
+        {
             name: "1",
             descr: "Opens the list of the beautiful words you selected",
             icon: "",
         },
         {
-            name: "2-9",
-            descr: "Inserts a group of characters you can use to build the words",
-            icon: "",
-        },
-        {
-            name: "0",
-            descr: "Opens the list of words posiible to build from the combination of your super secret code",
-            icon: "",
-        },
-        {
-            name: "#",
-            descr: "Trims the suggestions so that it only show words with the number of characters you inserted",
-            icon: "",
-        },
-        {
-            name: "word",
-            descr: "click on the words on the suggestion list to add them to the favorites",
-            icon: "",
-        },
-        {
             name: "😉",
-            descr: "if you feel embarrassed about telling something to someone, give them a super secret code. Have fun!",
+            descr: "If you feel embarrassed about telling something to someone, give them a super secret code. Have fun!",
             icon: "",
         },
     ];
 
     const dispatch = useDispatch();
-
-    const listFavorites = useTypedSelector((state: AppState) => state.list);
 
     return (
         <Margin>
