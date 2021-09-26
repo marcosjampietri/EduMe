@@ -7,6 +7,7 @@ import { useDispatch } from "react-redux";
 import Keyboard from "../components/Keyboard";
 import Favorite from "../components/Favorites";
 import Suggestions from "../components/Suggestions";
+import Help from "../components/Help";
 
 import { AppState, useTypedSelector } from "../store/reducers/rootReducer";
 
@@ -14,7 +15,9 @@ import { sugestOffAction } from "../store/actions/sugestActions";
 
 const Home: NextPage = () => {
     const dispatch = useDispatch();
+
     const { favOn } = useTypedSelector((state: AppState) => state.fav);
+    const { helpOn } = useTypedSelector((state: AppState) => state.help);
     const { sugestOn } = useTypedSelector((state: AppState) => state.sugst);
 
     const toggleFav = useTransition(favOn, {
@@ -35,10 +38,26 @@ const Home: NextPage = () => {
         config: config.slow,
     });
 
+    const toggleHelp = useTransition(helpOn, {
+        from: {
+            transform: "translate3d(-100vw,0,0)",
+            opacity: 0,
+        },
+        enter: {
+            transform: "translate3d(0vw,0,0)",
+            opacity: 1,
+        },
+        leave: {
+            transform: "translate3d(-100vw,0,0)",
+            opacity: 0,
+        },
+        reverse: helpOn,
+        config: config.slow,
+    });
+
     interface props {
         transform: string;
     }
-
     const toggleSug = useSpring<props>({
         transform: sugestOn ? "translate3d(0,-50vh,0)" : "translate3d(0,0vh,0)",
     });
@@ -55,6 +74,13 @@ const Home: NextPage = () => {
             </Head>
 
             <main>
+                {toggleHelp((styles, item) =>
+                    item ? (
+                        <HelpWrap style={styles}>
+                            <Help />
+                        </HelpWrap>
+                    ) : null
+                )}
                 {toggleFav((styles, item) =>
                     item ? (
                         <FavWrap style={styles}>
@@ -76,8 +102,18 @@ export default Home;
 const FavWrap = styled(animated.div)`
     position: absolute;
     width: 100%;
+    z-index: 5;
+
+    pointer-events: none;
 `;
 
+const HelpWrap = styled(animated.div)`
+    position: absolute;
+    width: 100%;
+    z-index: 5;
+
+    pointer-events: none;
+`;
 const SugWrap = styled(animated.div)`
     position: relative;
     top: 0px;

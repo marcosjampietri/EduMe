@@ -98,6 +98,7 @@ const Clear = styled.div`
     height: 80px;
     margin: 20px;
 
+    pointer-events: all;
     cursor: pointer;
     border-radius: 50px;
     border: 3px solid hsla(240, 5%, 10%, 1);

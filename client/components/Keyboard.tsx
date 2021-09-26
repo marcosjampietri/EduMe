@@ -1,4 +1,5 @@
 import React, { useEffect } from "react";
+import Link from "next/link";
 import { useDispatch } from "react-redux";
 import styled from "styled-components";
 import axios from "axios";
@@ -10,6 +11,7 @@ import {
 } from "../store/actions/sugestActions";
 import { clearCodeAction, typingAction } from "../store/actions/wordsAction";
 import { favAction } from "../store/actions/favActions";
+import { helpAction } from "../store/actions/helpActions";
 
 const Keyboard = () => {
     const digits = [
@@ -77,7 +79,7 @@ const Keyboard = () => {
             num: "",
             label: "0",
             alpha: "",
-            digi: "sugest",
+            digi: "suggest",
         },
         {
             num: "",
@@ -109,7 +111,7 @@ const Keyboard = () => {
         typing();
     }, [code]);
 
-    const special = (label: string) => {
+    const specialFX = (label: string) => {
         if (label === "DEL") {
             setTimeout(() => {
                 dispatch(clearCodeAction());
@@ -130,6 +132,21 @@ const Keyboard = () => {
     return (
         <Margin>
             <Outline>
+                <Top>
+                    <Credits>
+                        <p>DEVELOPED BY</p>
+                        <Link href="https://www.marcosjampietri.co.uk">
+                            <a> MARCOS JAMPIETRI </a>
+                        </Link>
+                        <p>FOR</p>
+                        <Link href="https://edume.com">
+                            <a> EduMe</a>
+                        </Link>
+                    </Credits>
+                    <ButtonX onClick={() => dispatch(helpAction())}>
+                        <p> ? </p>
+                    </ButtonX>
+                </Top>
                 <Title>SUPER SECRET CODE:</Title>
                 <Code
                     ref={textInput}
@@ -142,7 +159,7 @@ const Keyboard = () => {
                             key={index}
                             onClick={() => {
                                 dispatch(typingAction(item));
-                                special(item.label);
+                                specialFX(item.label);
                             }}
                         >
                             <HNum>{item.label}</HNum>
@@ -159,6 +176,13 @@ export default Keyboard;
 
 const Margin = styled.div`
     margin: 10px;
+`;
+
+const Top = styled.div`
+    width: 100%;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
 `;
 
 const Outline = styled.div`
@@ -181,7 +205,7 @@ const Outline = styled.div`
 `;
 
 const Title = styled.h1`
-    margin: 30px 10px -20px;
+    margin: 0px 10px -20px;
 
     font-size: clamp(1em, 3vw, 2em);
 
@@ -194,8 +218,8 @@ const Title = styled.h1`
     -webkit-text-fill-color: transparent;
 
     text-shadow: 0px 0px 10px hsla(165, 100%, 70%, 1),
-        1px -1px 0px hsla(165, 100%, 90%, 1),
-        -1px 1px 0px hsla(165, 100%, 30%, 1);
+        -1px -1px 0px hsla(165, 0%, 90%, 0.51),
+        1px 1px 0px hsla(165, 0%, 30%, 0.51);
 `;
 
 const Code = styled.input`
@@ -250,6 +274,17 @@ const Button = styled.div`
     flex-direction: column;
 `;
 
+const ButtonX = styled(Button)`
+    margin: 0px;
+    transform: scale(0.5) rotate(260deg);
+
+    p {
+        transform: scale(1.5) rotate(-260deg);
+        color: hsla(185, 100%, 50%, 1);
+        text-shadow: 1px 1px 15px hsla(165, 100%, 50%, 1);
+    }
+`;
+
 const H = styled.h4`
     color: hsla(185, 100%, 50%, 1);
     text-shadow: 1px 1px 15px hsla(165, 100%, 50%, 1);
@@ -260,4 +295,30 @@ const HNum = styled(H)`
 
 const HDigi = styled(H)`
     font-size: 10px;
+`;
+
+const Credits = styled.div`
+    margin: 30px 0px 10px;
+    width: 100%;
+    padding: 0px 20px 20px;
+
+    display: grid;
+    justify-content: start;
+    align-items: center;
+    grid-template-columns: 90px 3fr;
+    grid-template-rows: 1fr 1fr;
+    gap: 4px;
+
+    a {
+        font-size: 10px;
+        color: grey;
+        font-weight: 900;
+    }
+
+    p {
+        justify-self: end;
+        font-size: 8px;
+        color: grey;
+        font-weight: 100;
+    }
 `;

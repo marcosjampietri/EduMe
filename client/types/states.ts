@@ -4,6 +4,9 @@ import { ThunkAction } from "redux-thunk";
 export interface favState {
     favOn: boolean;
 }
+export interface helpState {
+    helpOn: boolean;
+}
 export interface modState {
     ModOn: boolean;
     modComponent: JSX.Element | null;
@@ -33,6 +36,7 @@ export interface typingActionTP {
 
 export interface storeType {
     favState: favState;
+    helpState: helpState;
     modState: modState;
     toastState: toastState;
     loadState: loadState;
