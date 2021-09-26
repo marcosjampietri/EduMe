@@ -14,7 +14,7 @@ const Favorites = () => {
     return (
         <Margin>
             <Outline>
-                <H1>FAVORITE WORDS</H1>
+                <H1>FAVOURITE WORDS</H1>
                 <List>
                     {listFavorites.map((word, ind) => (
                         <h4 key={ind}>{word}</h4>
@@ -82,7 +82,7 @@ const List = styled.ul`
 `;
 
 const H1 = styled.h1`
-    font-size: clamp(1em, 3vw, 3em);
+    font-size: clamp(1em, 2vw, 3em);
     margin: 20px;
     color: gray;
 `;
