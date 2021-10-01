@@ -13,12 +13,7 @@ export function codeReducer(
     action: any
 ): dictType {
     switch (action.type) {
-        case "GET_WORDS":
-            return {
-                ...state,
-                code: action.payload.code,
 
-            };
         case "TYPING":
             return {
                 ...state,

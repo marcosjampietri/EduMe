@@ -1,6 +1,7 @@
 import React from "react";
 import { useDispatch } from "react-redux";
 import styled from "styled-components";
+import { animated, useTransition } from "react-spring";
 
 import { AppState, useTypedSelector } from "../store/reducers/rootReducer";
 import { addFavAction } from "../store/actions/listActions";
@@ -11,33 +12,52 @@ import { sugestOffAction } from "../store/actions/sugestActions";
 const Keyboard = () => {
     const dispatch = useDispatch();
 
-    const { wordsList } = useTypedSelector((state: AppState) => state.sugst);
+    const { wordsList, sugestOn } = useTypedSelector(
+        (state: AppState) => state.sugst
+    );
+
+    const dismiss = useTransition(sugestOn, {
+        from: { opacity: 0 },
+        enter: { opacity: 1 },
+        leave: { opacity: 0 },
+    });
 
     return (
-        <List onClick={() => dispatch(sugestOffAction())}>
-            {wordsList.map((word, ind) => (
-                <h4
-                    key={ind}
-                    onClick={() => {
-                        dispatch(addFavAction(word));
-                        dispatch(clearCodeAction());
-                    }}
-                >
-                    {word}
-                </h4>
-            ))}
-        </List>
+        <Wrap onClick={() => dispatch(sugestOffAction())}>
+            {dismiss((styles, item) =>
+                item ? <Close style={styles}> DISMISS</Close> : null
+            )}
+            <List>
+                {wordsList.map((word, ind) => (
+                    <h4
+                        key={ind}
+                        onClick={() => {
+                            dispatch(addFavAction(word));
+                            dispatch(clearCodeAction());
+                        }}
+                    >
+                        {word}
+                    </h4>
+                ))}
+            </List>
+        </Wrap>
     );
 };
 
 export default Keyboard;
 
-const List = styled.ul`
-    margin: 50px auto;
-    padding: 20px;
+const Wrap = styled.div`
+    position: relativ;
+`;
 
+const List = styled.ul`
+    margin: 20px auto;
+    padding: 20px;
     width: 85%;
     max-width: 700px;
+
+    background-color: hsla(186, 100%, 50%, 0.04);
+    box-shadow: 0px 0px 20px hsla(186, 100%, 50%, 0.31);
 
     display: flex;
     justify-content: center;
@@ -53,4 +73,21 @@ const List = styled.ul`
         background-color: hsla(0, 0%, 81%, 0.7);
         border-radius: 5px;
     }
+`;
+const Close = styled(animated.div)`
+    position: absolute;
+    top: 0px;
+    left: 50vw;
+    transform: translate3d(-50%, -50%, 0);
+    margin: 0px auto;
+    padding: 4px;
+    width: 120px;
+
+    background-color: hsla(186, 80%, 48%, 1);
+    box-shadow: 0px 0px 20px hsla(186, 100%, 48%, 1);
+    border: 2px inset hsla(0, 0%, 83%, 0.71);
+    border-radius: 5px;
+
+    display: flex;
+    justify-content: center;
 `;

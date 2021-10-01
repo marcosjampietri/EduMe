@@ -17,7 +17,7 @@ const Favorites = () => {
                 <H1>FAVOURITE WORDS</H1>
                 <List>
                     {listFavorites.map((word, ind) => (
-                        <h4 key={ind}>{word}</h4>
+                        <Word key={ind}>{word}</Word>
                     ))}
                 </List>
                 <Controls>
@@ -35,9 +35,11 @@ export default Favorites;
 
 const Margin = styled.div`
     margin: 2px;
+    pointer-events: none;
 `;
 
 const Outline = styled.div`
+    pointer-events: all;
     width: 100%;
     max-width: 550px;
 
@@ -68,23 +70,22 @@ const List = styled.ul`
     display: flex;
     justify-content: center;
     flex-wrap: wrap;
-
-    h4 {
-        margin: 10px;
-        padding: 5px;
-        font-size: clamp(1em, 2, 5vw, 3em);
-
-        cursor: pointer;
-        color: black;
-        background-color: hsla(0, 0%, 81%, 0.7);
-        border-radius: 5px;
-    }
 `;
 
 const H1 = styled.h1`
     font-size: clamp(1em, 2vw, 3em);
     margin: 20px;
     color: gray;
+`;
+const Word = styled.h4`
+    margin: 10px;
+    padding: 5px;
+    font-size: clamp(1em, 2, 5vw, 3em);
+
+    cursor: pointer;
+    color: black;
+    background-color: hsla(0, 0%, 81%, 0.7);
+    border-radius: 5px;
 `;
 
 const Controls = styled.div`

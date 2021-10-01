@@ -9,7 +9,11 @@ import {
     sugestionsAction,
     sugestOnAction,
 } from "../store/actions/sugestActions";
-import { clearCodeAction, typingAction } from "../store/actions/wordsAction";
+import {
+    clearCodeAction,
+    typingAction,
+    getWordsAction,
+} from "../store/actions/wordsAction";
 import { favAction } from "../store/actions/favActions";
 import { helpAction } from "../store/actions/helpActions";
 
@@ -111,6 +115,8 @@ const Keyboard = () => {
         typing();
     }, [code]);
 
+    console.log(code);
+
     const specialFX = (label: string) => {
         if (label === "DEL") {
             setTimeout(() => {
@@ -159,6 +165,9 @@ const Keyboard = () => {
                             key={index}
                             onClick={() => {
                                 dispatch(typingAction(item));
+                                {
+                                    /* dispatch(getWordsAction(item)); */
+                                }
                                 specialFX(item.label);
                             }}
                         >

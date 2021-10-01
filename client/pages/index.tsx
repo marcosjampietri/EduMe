@@ -103,16 +103,12 @@ const FavWrap = styled(animated.div)`
     position: absolute;
     width: 100%;
     z-index: 5;
-
-    pointer-events: none;
 `;
 
 const HelpWrap = styled(animated.div)`
     position: absolute;
     width: 100%;
     z-index: 5;
-
-    pointer-events: none;
 `;
 const SugWrap = styled(animated.div)`
     position: relative;

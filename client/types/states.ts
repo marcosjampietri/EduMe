@@ -46,7 +46,7 @@ export interface storeType {
 
 export type allActions = navActionTP | isLodingActionTP | typingActionTP;
 
-export type actionCreator<allActions extends Action> = () => ThunkAction<
+export type actionCreator<allActions extends Action> = (arg?: any) => ThunkAction<
     void,
     storeType,
     {},

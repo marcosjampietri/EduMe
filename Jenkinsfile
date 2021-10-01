@@ -5,7 +5,7 @@ pipeline {
     agent any
     
     environment {
-        NEW_VERSION = "1.x"
+        NEW_VERSION = "2.4.2"
         ANSIBLE_SERVER = "142.93.59.204"
     }
     
@@ -30,15 +30,15 @@ pipeline {
                script {
                   echo 'building application..'
                   withCredentials([usernamePassword(credentialsId: 'dockerhub-cred', passwordVariable: 'DOCKER_PASSWORD', usernameVariable: 'DOCKER_ID')]) {
-                      sh "docker build -t marcosjampietri/ssc-edume-next:2.4 ./client"
-                      sh "docker build -t marcosjampietri/ssc-api:2.4 ./server"
-                      sh "docker build -t marcosjampietri/ssc-nginx:2.4 ./nginx"
+                      sh "docker build -t marcosjampietri/ssc-edume-next:${NEW_VERSION} ./client"
+                      sh "docker build -t marcosjampietri/ssc-api:${NEW_VERSION} ./server"
+                      sh "docker build -t marcosjampietri/ssc-nginx:${NEW_VERSION} ./nginx"
                       
                       sh 'echo ${DOCKER_PASSWORD} | docker login -u ${DOCKER_ID} --password-stdin'
                       
-                      sh "docker push marcosjampietri/ssc-edume-next:2.4"
-                      sh "docker push marcosjampietri/ssc-api:2.4"
-                      sh "docker push marcosjampietri/ssc-nginx:2.4"
+                      sh "docker push marcosjampietri/ssc-edume-next:${NEW_VERSION}"
+                      sh "docker push marcosjampietri/ssc-api:${NEW_VERSION}"
+                      sh "docker push marcosjampietri/ssc-nginx:${NEW_VERSION}"
                   }
                }
             }
@@ -118,6 +118,7 @@ pipeline {
             
             environment {
                 DOCKER_CRED = credentials('dockerhub-cred')
+                ENV_FILE = credentials('compose-vars')
             }
             
             steps {
@@ -134,6 +135,7 @@ pipeline {
                     sshagent(['Marcos-ec2-default']) {
                        sh "scp -o StrictHostKeyChecking=no app-build.sh ${ec2Instance}:/home/ec2-user"
                        sh "scp -o StrictHostKeyChecking=no docker-compose.yaml ${ec2Instance}:/home/ec2-user"
+                       sh "scp -o StrictHostKeyChecking=no ${ENV_FILE} ${ec2Instance}:/home/ec2-user"
                        sh "ssh -o StrictHostKeyChecking=no ${ec2Instance} ${shellCmd}"
                    }
                 }

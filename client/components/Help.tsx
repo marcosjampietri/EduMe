@@ -69,10 +69,14 @@ export default Help;
 const Margin = styled.div`
     margin: 2px;
     z-index: 5;
+    pointer-events: none;
 `;
 
 const Outline = styled.div`
+    pointer-events: all;
+
     width: 90vw;
+
     max-width: 550px;
 
     margin: 0px auto;
@@ -146,7 +150,6 @@ const Clear = styled.div`
     height: 80px;
     margin: 20px;
 
-    pointer-events: all;
     cursor: pointer;
     border-radius: 50px;
     border: 3px solid hsla(240, 5%, 10%, 1);
