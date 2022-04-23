@@ -1,6 +1,3 @@
-import { actionCreator } from "../../types/states";
-import axios from "axios";
-
 
 export const sugestionsAction = (wordsList: string[]) => ({
     type: "GET_SUGESTIONS",

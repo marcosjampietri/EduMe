@@ -1,12 +1,6 @@
 import axios from "axios";
-import { actionCreator } from "../../types/states";
+import { actionCreator, digit } from "../../types/states";
 
-interface digit {
-    num: string;
-    label: string;
-    alpha: string;
-    digi: string;
-}
 
 export const typingAction = (input: object) => ({
     type: "TYPING",
@@ -26,11 +20,15 @@ export const getWordsAction: actionCreator<any> = (input: digit) => async (
         payload: input,
     });
 
+
+
     const url =
         process.env["NODE_ENV"] === "development"
-            ? "http://localhost:5000"
+            ? "http://localhost:3000"
+            // ? "http://localhost:5000" if using nginx without next.js server
             : "";
-    const dictdUrl = () => `${url}/api/translate`;
+    // const dictdUrl = () => `${url}/api/translate`;
+    const dictdUrl = () => `/api/translate`;
 
     const { data: wordList } = await axios.post(
         dictdUrl(),
@@ -39,30 +37,10 @@ export const getWordsAction: actionCreator<any> = (input: digit) => async (
         }
     );
 
+
+
     dispatch({
         type: "GET_SUGESTIONS",
         payload: wordList,
     });
 };
-
-
-// export const wordsAction: actionCreator<any> = () => async (
-//     dispatch,
-//     getState
-// ) => {
-//     dispatch({
-//         type: "LOADING",
-//     });
-// 
-//     const url =
-//         process.env["NODE_ENV"] === "development"
-//             ? "http://localhost:5000"
-//             : "";
-//     const dictdUrl = () => `${url}/api/dictionary`;
-//     const fullDict = await axios.get(dictdUrl());
-// 
-//     dispatch({
-//         type: "GET_WORDS",
-//         payload: { words: fullDict.data },
-//     });
-// };

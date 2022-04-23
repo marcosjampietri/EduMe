@@ -1,6 +1,9 @@
 
 
-export type ListState = String[];
+export interface ListState {
+    listFavorites: string[],
+    onList: boolean
+}
 
 
 

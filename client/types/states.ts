@@ -34,6 +34,16 @@ export interface typingActionTP {
     obj: { type: "TOGGLE_NAV", payload: string };
 }
 
+
+export interface digit {
+    num: string;
+    label: string;
+    alpha: string;
+    digi: string;
+}
+
+
+
 export interface storeType {
     favState: favState;
     helpState: helpState;

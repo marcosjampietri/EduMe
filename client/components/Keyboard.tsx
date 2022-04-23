@@ -101,7 +101,7 @@ const Keyboard = () => {
         const typing = async () => {
             const url =
                 process.env["NODE_ENV"] === "development"
-                    ? "http://localhost:5000"
+                    ? "http://localhost:3000"
                     : "";
             const dictdUrl = () => `${url}/api/translate`;
 
@@ -114,6 +114,8 @@ const Keyboard = () => {
 
         typing();
     }, [code]);
+
+    useEffect(() => { }, [code]);
 
     console.log(code);
 
@@ -164,10 +166,10 @@ const Keyboard = () => {
                         <Button
                             key={index}
                             onClick={() => {
-                                dispatch(typingAction(item));
                                 {
-                                    /* dispatch(getWordsAction(item)); */
+                                    /* dispatch(typingAction(item)); */
                                 }
+                                dispatch(getWordsAction(item));
                                 specialFX(item.label);
                             }}
                         >

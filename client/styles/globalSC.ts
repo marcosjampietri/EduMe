@@ -27,3 +27,7 @@ html {
 }
 
 `;
+
+export const color = {
+    dark: "hsla(240, 5%, 12%, 1)"
+}

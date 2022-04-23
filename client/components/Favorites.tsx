@@ -9,7 +9,7 @@ import { favAction } from "../store/actions/favActions";
 const Favorites = () => {
     const dispatch = useDispatch();
 
-    const listFavorites = useTypedSelector((state: AppState) => state.list);
+    const { listFavorites } = useTypedSelector((state: AppState) => state.list);
 
     return (
         <Margin>
